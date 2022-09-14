@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- /shop/product product page -->
+    <template id="product_variant_custom" inherit_id="website_sale.product" customize_show="True" name="Product Variant">
+        <xpath expr="//section//form//div//t[@t-placeholder='select']/t[@t-else='']" position="replace"/>
+        <xpath expr="//section//form//div//t[@t-placeholder='select']/t[@t-if='combination']" position="replace"/>
+        <xpath expr="//section[@id='product_detail']//form//div[hasclass('js_main_product')]//div[1]" position="after">
+            <t t-if="not variants">
+                <div t-if="product.product_variant_count > 1" class="knk_matrix_table">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                    <div class="js_product_matrix">
+                        <t t-placeholder="select">
+                            <input type="hidden" class="product_id" name="product_id" t-att-value="int(product.product_variant_ids[0]) if len(product.product_variant_ids) == 1 else '0'" />
+                            <t t-call="website_matrix_quick_cart.custom_variants">
+                                <t t-set="ul_class" t-value="'nav-stacked'" />
+                            </t>
+                        </t>
+                        <p t-if="len(product.product_variant_ids) > 1" class="css_not_available_msg bg-danger" style="padding: 15px;;display:none">Product not available</p>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+        <xpath expr="//section//form//div[@id='add_to_cart_wrap']" position="replace">
+            <div id="add_to_cart_wrap" class="d-inline">
+                <t  t-if="product.product_variant_count > 1">
+                    <a role="button" id="matrix_add_to_cart" class="btn btn-primary btn-lg my-1 mr-1 px-5 font-weight-bold flex-grow-1" href="#"><i class="fa fa-shopping-cart mr-2"/>ADD TO CART</a>
+                </t>
+                <t t-else="">
+                    <a role="button" id="add_to_cart" class="btn btn-primary btn-lg js_check_product a-submit my-1 mr-1 px-5 font-weight-bold flex-grow-1" href="#"><i class="fa fa-shopping-cart mr-2"/>ADD TO CART</a>
+                </t>
+                <div id="product_option_block" class="d-inline-block align-middle"/>
+            </div>
+        </xpath>
+        
+    </template>
+
+    <template id="product_quantity_inherit" inherit_id="website_sale.product_quantity">
+        <xpath expr="//div[hasclass('css_quantity')]" position="attributes">
+            <attribute name="t-if">product.product_variant_count == 1</attribute>
+        </xpath>
+    </template>
+
+    <template id="custom_variants">
+        <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product)" />
+        <ul t-attf-class="list-unstyled js_add_cart_variants #{ul_class}" t-att-data-attribute_value_ids="attribute_value_ids">
+            <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product,True)" />
+            <table class="col-sm-12 col-md-12 col-lg-12 table table-sm">
+                <tr class="headings">
+                    <t t-set="vcounter" t-value="0"/>
+                    <t t-foreach="attribute_value_ids['header']" t-as="att_name">
+
+                        <th t-attf-class="text-primary border-top-0 border-bottom #{'d-none' if vcounter == 0 else ''}">
+                            <strong t-esc="att_name" />
+                        </th>
+                        <t t-set="vcounter" t-value="vcounter+1"/>
+                    </t>
+                    <th class="text-primary border-top-0 border-bottom">
+                        Price
+                    </th>
+                    <th class="text-primary border-top-0 border-bottom">
+                    </th>
+                </tr>
+                <t t-foreach="attribute_value_ids['value']" t-as="att_values">
+                    <tr class="product_variant" t-att-data-product_id="att_values[0]">
+                        <t t-set="vcounter" t-value="0"/>
+                        <t t-foreach="att_values[2]" t-as="att_value">
+                            <td t-attf-class="border-top-0 #{'d-none' if vcounter == 0 else ''}">
+                                <t t-if="att_value != 'checkbox'">
+                                    <span t-esc="att_value" />
+                                </t>
+                            </td>
+                            <t t-set="vcounter" t-value="vcounter+1"/>
+                        </t>
+                        <td class='td-price border-top-0'>
+                            <t t-set="combination_info" t-value="att_values[1].product_tmpl_id._get_combination_info(product_id=att_values[0], add_qty=1)" />
+                            <span style="white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
+                        </td>
+                        <td class="border-top-0">
+                            <div class="cart_relative">
+                                <span>QTY</span>
+                                <input type="input" name="add_qty[]" size="2" class="add_variant_qty" />
+                            </div>
+                        </td>
+                    </tr>
+                </t>
+            </table>
+        </ul>
+    </template>
+</odoo>
