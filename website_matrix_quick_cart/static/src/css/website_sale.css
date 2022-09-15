@@ -1,55 +1,11 @@
 /*######## Custom CSS ###########*/
-.headings {
-  font-weight: bold;
-  background-color: #016386;
-  color: #ffffff;
+
+.knk_matrix_table .matrix-form-control {
+    border: 1px solid #DEE2E6;
+    height: calc(1.4em + 0.75rem + 2px);
 }
-.cart_relative {
-  position: relative;
+.knk_matrix_table .col_text_center {
+    vertical-align: middle;
+    align-items: center;
+    display: flex;
 }
-.product_variant:hover {
-  background-color: #b4ebff;
-  cursor: pointer;
-}
-.add_to_cart {
-  font-family: 'Droid Sans', sans-serif;
-  margin: 5px;
-  padding: 5px;
-  border: 1px solid rgba(0,0,0,0.4) ;
-  cursor: pointer;
-  width: 124px;
-  background-color: #6C9700;
-  color: #fff;
-  font-weight: 800;
-}
-.add_to_cart:hover {
-  text-decoration: none;
-}
-.variant_tr {
-  border: 4px solid #B4EBFF;
-  background-color: #eee;
-}
-.input_addtocart {
-  background: none repeat scroll 0 0 #FFFFFF;
-  border: 5px solid #B4EBFF;
-  margin: 2px;
-  padding: 10px 25px;
-  position: absolute;
-  right: -15px;
-  top: 44px;
-  z-index: 1;
-  display: none;
-  border-top: none;
-}
-.product_variant_img {
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-  max-height: 500px; 
-  width:50px;
-  height: 40px;
-}
-/*
-.product_variant:hover {
-  background-color: #ffff99 !important;
-}*/

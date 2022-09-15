@@ -17,6 +17,7 @@
     ],
     'assets': {
         'web.assets_frontend': [
+            'website_matrix_quick_cart/static/src/css/website_sale.css',
             'website_matrix_quick_cart/static/src/js/website_sale.js',
         ],
     },

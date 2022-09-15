@@ -2,8 +2,10 @@
 <odoo>
     <!-- /shop/product product page -->
     <template id="product_variant_custom" inherit_id="website_sale.product" customize_show="True" name="Product Variant">
-        <xpath expr="//section//form//div//t[@t-placeholder='select']/t[@t-else='']" position="replace"/>
-        <xpath expr="//section//form//div//t[@t-placeholder='select']/t[@t-if='combination']" position="replace"/>
+        <!-- <xpath expr="//section//form//div//t[@t-placeholder='select']/t[@t-else='']" position="replace"/> -->
+        <xpath expr="//section//form//div//t[@t-placeholder='select']/t[@t-if='combination']/t[@t-set='ul_class']" position="replace">
+            <t t-set="ul_class" t-valuef="flex-column d-none" />
+        </xpath>
         <xpath expr="//section[@id='product_detail']//form//div[hasclass('js_main_product')]//div[1]" position="after">
             <t t-if="not variants">
                 <div t-if="product.product_variant_count > 1" class="knk_matrix_table">
@@ -44,46 +46,46 @@
         <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product)" />
         <ul t-attf-class="list-unstyled js_add_cart_variants #{ul_class}" t-att-data-attribute_value_ids="attribute_value_ids">
             <t t-set="attribute_value_ids" t-value="get_attribute_value_ids(product,True)" />
-            <table class="col-sm-12 col-md-12 col-lg-12 table table-sm">
-                <tr class="headings">
+            <div class="col-sm-12 col-md-12 col-lg-12 table table-sm mt-3">
+                <div class=" row headings">
                     <t t-set="vcounter" t-value="0"/>
                     <t t-foreach="attribute_value_ids['header']" t-as="att_name">
 
-                        <th t-attf-class="text-primary border-top-0 border-bottom #{'d-none' if vcounter == 0 else ''}">
+                        <div t-attf-class="col-md-2 text-primary  border-bottom #{'d-none' if vcounter == 0 else ''}">
                             <strong t-esc="att_name" />
-                        </th>
+                        </div>
                         <t t-set="vcounter" t-value="vcounter+1"/>
                     </t>
-                    <th class="text-primary border-top-0 border-bottom">
+                    <div class="col-md-2 text-primary  border-bottom">
                         Price
-                    </th>
-                    <th class="text-primary border-top-0 border-bottom">
-                    </th>
-                </tr>
+                    </div>
+                    <div class="col-md-3 text-primary  border-bottom">
+                    </div>
+                </div>
                 <t t-foreach="attribute_value_ids['value']" t-as="att_values">
-                    <tr class="product_variant" t-att-data-product_id="att_values[0]">
+                    <div class="row product_variant pt-2 pb-1" t-att-data-product_id="att_values[0]">
                         <t t-set="vcounter" t-value="0"/>
                         <t t-foreach="att_values[2]" t-as="att_value">
-                            <td t-attf-class="border-top-0 #{'d-none' if vcounter == 0 else ''}">
+                            <div t-attf-class="col-md-2 col_text_center #{'d-none' if vcounter == 0 else ''}">
                                 <t t-if="att_value != 'checkbox'">
                                     <span t-esc="att_value" />
                                 </t>
-                            </td>
+                            </div>
                             <t t-set="vcounter" t-value="vcounter+1"/>
                         </t>
-                        <td class='td-price border-top-0'>
+                        <div class='col-md-2 td-price col_text_center'>
                             <t t-set="combination_info" t-value="att_values[1].product_tmpl_id._get_combination_info(product_id=att_values[0], add_qty=1)" />
                             <span style="white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
-                        </td>
-                        <td class="border-top-0">
+                        </div>
+                        <div class="col-md-3 col_text_center">
                             <div class="cart_relative">
                                 <span>QTY</span>
-                                <input type="input" name="add_qty[]" size="2" class="add_variant_qty" />
+                                <input type="input" name="add_qty[]" size="4" class="add_variant_qty matrix-form-control text-center" />
                             </div>
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 </t>
-            </table>
+            </div>
         </ul>
     </template>
 </odoo>

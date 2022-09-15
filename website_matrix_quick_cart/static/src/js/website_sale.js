@@ -9,12 +9,12 @@ WebsiteSale.include({
     }),
     _onClickMatrix: async function(ev){
         var datas = [];
-        var products = $(ev.currentTarget).closest('.js_main_product').find('.knk_matrix_table .table tr.product_variant');
-        var elmets = $(ev.currentTarget).closest('.js_main_product').find(".knk_matrix_table .table tr.product_variant .cart_relative input[name='add_qty[]']");
+        var products = $(ev.currentTarget).closest('.js_main_product').find('.knk_matrix_table div .row.product_variant');
+        var elmets = $(ev.currentTarget).closest('.js_main_product').find(".knk_matrix_table div .row.product_variant .cart_relative input[name='add_qty[]']");
         if(elmets != undefined && elmets.length){
             _.each(elmets, function(elmt, index){
-                if($(elmt).val() != '' && $(elmt).val() != '0'){
-                    var product_id = parseInt($(elmt).closest('tr').attr('data-product_id'), 10);
+                if($(elmt).val() != '' && $(elmt).val() != '0' && $.isNumeric($(elmt).val())){
+                    var product_id = parseInt($(elmt).closest('.row').attr('data-product_id'), 10);
                     var qty = parseInt($(elmt).val(), 10);
                     datas.push({
                         'product_id' : product_id,
