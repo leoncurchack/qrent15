@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+       <record id="report_package_zpl" model="ir.actions.report">
+            <field name="name">Print Package ZPL</field>
+            <field name="model">stock.picking</field>
+            <field name="report_type">qweb-text</field>
+            <field name="report_name">print_package_label_knk.report_package_label_zpl</field>
+            <field name="report_file">print_package_label_knk.report_package_label_zpl</field>
+        </record>
+    </data>
+</odoo>

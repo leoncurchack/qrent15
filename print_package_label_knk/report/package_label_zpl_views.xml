@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+     <template id="report_package_label_zpl">
+                <t t-foreach="docs" t-as="o">
+                    <t t-foreach="o.move_line_ids_without_package.mapped('result_package_id')" t-as="pack">
+                            <t t-translation="off">
+^XA
+^FT100,80^A0N,40,30^FD<t t-if="pack"><t t-esc="pack.name" /></t>^FS 
+
+<t t-if="pack.name">
+^FO0,160^BY3
+^BCN,100,Y,N,N
+^FD<t t-esc="pack.name" />^FS
+</t>
+^FO100,300,1
+^A0N,30,24^FDProduct^FS
+^FO150,300,1
+^A0N,30,24^FDQty^FS
+^FO250,300,1
+^A0N,30,24^FDBarcode^FS
+<t t-if="o.move_ids_without_package">
+    <t t-set="y" t-value="350"/>
+    <t t-foreach="o.move_ids_without_package.filtered(lambda x: x.move_line_ids.mapped('result_package_id') in pack)" t-as="move">
+        ^FO100,<t t-esc="y"/>,1
+        ^A0N,30,24^FD<t t-esc="move.product_id.name[0:25]"/>^FS
+        ^FO150,<t t-esc="y"/>,1
+        ^A0N,30,24^FD<t t-esc="move.quantity_done"/>^FS
+        ^FO340,<t t-esc="y"/>,1^BY1
+        ^A0N,0,0^BCN,25,Y,N,N
+        ^FD<t t-esc="move.product_id.barcode"/>^FS
+        <t t-set="y" t-value="y+100"/>
+    </t>
+</t>
+^XZ
+                        </t>
+                    </t>
+                </t>
+        </template>
+</odoo>
