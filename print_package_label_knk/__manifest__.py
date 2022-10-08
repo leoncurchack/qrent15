@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# Powered by Kanak Infosystems LLP.
-# © 2020 Kanak Infosystems LLP. (<https://www.kanakinfosystems.com>).
+# Powered by SSG.
+# © 2020 SSG. (<https://smartsolutionsgroupllc.com>).
 {
     'name': 'Print Package Label ZPL',
     'version': '1.0',
@@ -11,8 +11,8 @@ Print Package Label ZPL
 06/10/2022:[ADD][VSC]: Added Print Package Label ZPL Report in Tranfers Form View
 """,
     'category': 'Inventory/Inventory',
-    'author': 'Kanak Infosystems LLP.',
-    'website': 'https://www.kanakinfosystems.com',
+    'author': 'SSG',
+    'website': 'https://smartsolutionsgroupllc.com',
     'images': ['static/description/banner.jpg'],
     'depends': ['stock'],
     'data': [
@@ -24,5 +24,5 @@ Print Package Label ZPL
     'application': False,
     'auto_install': False,
     'currency': 'EUR',
-    'price': '00',
+    'price': '100',
 }

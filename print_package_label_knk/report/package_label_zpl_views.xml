@@ -5,30 +5,45 @@
                     <t t-foreach="o.move_line_ids_without_package.mapped('result_package_id')" t-as="pack">
                             <t t-translation="off">
 ^XA
-^FT100,80^A0N,40,30^FD<t t-if="pack"><t t-esc="pack.name" /></t>^FS 
-
 <t t-if="pack.name">
-^FO0,160^BY3
-^BCN,100,Y,N,N
+^FO50,160^BY2
+^BCN,80,Y,N,N
 ^FD<t t-esc="pack.name" />^FS
 </t>
 ^FO100,300,1
-^A0N,30,24^FDProduct^FS
-^FO150,300,1
-^A0N,30,24^FDQty^FS
-^FO250,300,1
-^A0N,30,24^FDBarcode^FS
+^A0N,20,16^FDProduct^FS
+^FO350,300,1
+^A0N,20,16^FDQty^FS
 <t t-if="o.move_ids_without_package">
     <t t-set="y" t-value="350"/>
     <t t-foreach="o.move_ids_without_package.filtered(lambda x: x.move_line_ids.mapped('result_package_id') in pack)" t-as="move">
-        ^FO100,<t t-esc="y"/>,1
-        ^A0N,30,24^FD<t t-esc="move.product_id.name[0:25]"/>^FS
-        ^FO150,<t t-esc="y"/>,1
-        ^A0N,30,24^FD<t t-esc="move.quantity_done"/>^FS
+        <t t-set="name_x" t-value="100"/>
+        <t t-set="start" t-value="move.product_id.display_name.find('[')"/>
+        <t t-set="end" t-value="move.product_id.display_name.find(']')"/>
+        <t t-if="start != -1 and end != -1">
+            <t t-set="name" t-value="move.product_id.display_name.replace(move.product_id.display_name[start:end+1], '')[:50]"/>
+        </t>
+        <t t-if="len(name) > 7">
+            <t t-set="index" t-value="1"/>
+            <t t-if="len(name) &lt; 10">
+                <t t-set="index" t-value="3"/>
+            </t>
+            <t t-else="">
+                <t t-set="index" t-value="4"/>
+            </t>
+            <t t-foreach="name[6:]" t-as="i">
+                <t t-set="name_x" t-value="name_x + index"/>
+            </t>
+            <t t-if="len(name) == 50">
+                <t t-set="name_x" t-value="320"/>
+            </t>
+        </t>
+        ^FO<t t-esc="name_x"/>,<t t-esc="y"/>,1
+        ^A0N,20,16^FD<t t-esc="name[:50]"/>^FS
+        ^FO350,<t t-esc="y"/>,1
+        ^A0N,20,16^FD<t t-esc="move.quantity_done"/>^FS
         ^FO340,<t t-esc="y"/>,1^BY1
-        ^A0N,0,0^BCN,25,Y,N,N
-        ^FD<t t-esc="move.product_id.barcode"/>^FS
-        <t t-set="y" t-value="y+100"/>
+        <t t-set="y" t-value="y+50"/>
     </t>
 </t>
 ^XZ
